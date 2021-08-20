@@ -9,7 +9,6 @@ class Phrase {
     * by an empty (li) box).
     */
    addPhraseToDisplay() {
-      const phraseDiv = document.getElementById('phrase').firstElementChild;
       const phraseArr = this.phrase.split('');
       phraseArr.forEach(letter => {
          const li = document.createElement('li');
@@ -17,17 +16,15 @@ class Phrase {
          const isChar = /\S/.test(letter);
          if (isLetter) {
             li.classList.add('hide', 'letter', `'${letter}'`);
-            li.textContent = letter;
          } else if (isChar) {
-            li.classList.add('show', `'${letter}`);
-            li.textContent = letter;
+            li.classList.add('show');
          } else {   
             li.classList.add('space');
-            li.textContent = ' ';
          }
-         phraseDiv.append(li);
+         li.textContent = isLetter || isChar ? letter
+            : ' ';
+         phraseList.append(li);
       });
-
    }
 
    /**
@@ -43,8 +40,6 @@ class Phrase {
     * player's selection
     */
    showMatchedLetter(letter) {
-      const phraseDiv = document.getElementById('phrase').firstElementChild;
-      const letters = phraseDiv.querySelectorAll('li');
       for (let ltr of letters) {
          if (ltr.textContent === letter) {
             ltr.classList.remove('hide');

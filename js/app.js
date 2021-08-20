@@ -1,6 +1,14 @@
 const startBtn = document.getElementById('btn__reset');
+const phraseList = document.getElementById('phrase').firstElementChild;
+const letters = phraseList.childNodes;
 const keyBtns = document.getElementsByClassName('key');
-const game = new Game();
+let game = null;
+
+startBtn.addEventListener('click', () => {
+   // set new instance
+   game = new Game();
+   game.startGame();
+});
 
 /**
  * Adds listeners on each key button
@@ -21,9 +29,4 @@ document.addEventListener('keyup', (evt) => {
       game.handleInteraction(keyBtns, evt.key);
       key.setAttribute('disabled', true);
    }
-})
-
-startBtn.addEventListener('click', () => {
-   game.startGame();
 });
-

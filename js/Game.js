@@ -1,21 +1,24 @@
 const startScrn = document.getElementById('overlay');
-const phraseList = document.getElementById('phrase').firstElementChild;
+const heading = startScrn.querySelector('h1');
+const phraseBank = ["I'll be back", "Luke, I am your father", "Release the Kraken!", "Bond, James Bond", "Say hello to my little friend!"];
+// initial state = no winner
+let winner = false;
 
 class Game {
    constructor() {
       this.missed = 0;
       // array of five phrases to choose from
-      this.phrases = ["I'll be back", "Luke, I am your father", "Release the Kraken!", "Bond, James Bond", "Say hello to my little friend!"];
+      this.phrases = phraseBank;
       this.activePhrase = null;
    }
 
    startGame() {
+      winner = false;
       // clear out any li child nodes on phrase ul node
       while (phraseList.firstChild) {
          phraseList.removeChild(phraseList.firstChild);
       }
 
-      const keyBtns = document.querySelectorAll('.key');
       // Enable all the onscreen kb buttons, and update to use 'key'
       // class (not 'chosen' or 'wrong' classes)
       for (let key of keyBtns) {
@@ -61,9 +64,9 @@ class Game {
             if (key.textContent === letter) {
                key.classList.add('chosen');
                phraseObj.showMatchedLetter(letter);
-               const hasWon = this.checkForWin();
-               if (hasWon) {
-                  this.gameOver(true);
+               winner = this.checkForWin();
+               if (winner) {
+                  this.gameOver();
                }
             }
          }
@@ -79,7 +82,7 @@ class Game {
       hearts[0].setAttribute('src', "images/lostHeart.png");
       this.missed++;
       if (this.missed === 5) {
-         this.gameOver(false);
+         this.gameOver();
       }
    }
 
@@ -88,7 +91,6 @@ class Game {
     * in the active phrase.
     */
    checkForWin() {
-      const letters = phraseList.childNodes;
       // iterate over li's
       for (let letter of letters) {
         if (letter.classList.contains('hide')) {
@@ -103,16 +105,12 @@ class Game {
     * Displays the original start screen overlay, along with the 
     * outcome of the last game.
     */
-   gameOver(hasWinner) {
+   gameOver() {
       // display the start screen overlay
       startScrn.style.display = 'block';
       startScrn.classList.remove('start');
-      if (hasWinner) {
-         startScrn.querySelector('h1').textContent = "You Win!";
-         startScrn.classList.add('win');
-      } else {
-         startScrn.querySelector('h1').textContent = "You lost :(";
-         startScrn.classList.add('lose');
-      }
+      // conditionally set text and class
+      heading.textContent = winner ? "You Win!" : "You Lost :(";
+      startScrn.classList.add(`${winner ? 'win' : 'lose'}`);
    }
 }

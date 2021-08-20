@@ -9,15 +9,19 @@ class Phrase {
     * by an empty (li) box).
     */
    addPhraseToDisplay() {
-      const phraseDiv = document.getElementById('phrase').querySelector('ul');
+      const phraseDiv = document.getElementById('phrase').firstElementChild;
       const phraseArr = this.phrase.split('');
       phraseArr.forEach(letter => {
          const li = document.createElement('li');
          const isLetter = /\w/.test(letter);
+         const isChar = /\S/.test(letter);
          if (isLetter) {
             li.classList.add('hide', 'letter', `'${letter}'`);
             li.textContent = letter;
-         } else if (letter === ' ') {
+         } else if (isChar) {
+            li.classList.add('show', `'${letter}`);
+            li.textContent = letter;
+         } else {   
             li.classList.add('space');
             li.textContent = ' ';
          }
@@ -27,18 +31,25 @@ class Phrase {
    }
 
    /**
-    * Checks to see if the letter selectedby the player matches
+    * Checks to see if the letter selected by the player matches
     * a letter in the phrase
     */
-   checkLetter() {
-
+   checkLetter(letter) {
+      return this.phrase.includes(letter);
    }
 
    /**
     * Reveals the letter(s) on the board that match the 
     * player's selection
     */
-   showMatchedLetter() {
-
+   showMatchedLetter(letter) {
+      const phraseDiv = document.getElementById('phrase').firstElementChild;
+      const letters = phraseDiv.querySelectorAll('li');
+      for (let ltr of letters) {
+         if (ltr.textContent === letter) {
+            ltr.classList.remove('hide');
+            ltr.classList.add('show');
+         }
+      }
    }
 };

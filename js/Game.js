@@ -1,3 +1,6 @@
+const startScrn = document.getElementById('overlay');
+const phraseList = document.getElementById('phrase').firstElementChild;
+
 class Game {
    constructor() {
       this.missed = 0;
@@ -8,14 +11,13 @@ class Game {
 
    startGame() {
       // clear out any li child nodes on phrase ul node
-      const phraseList = document.getElementById('phrase').firstElementChild;
       while (phraseList.firstChild) {
          phraseList.removeChild(phraseList.firstChild);
       }
 
+      const keyBtns = document.querySelectorAll('.key');
       // Enable all the onscreen kb buttons, and update to use 'key'
       // class (not 'chosen' or 'wrong' classes)
-      const keyBtns = document.querySelectorAll('.key');
       for (let key of keyBtns) {
          key.classList.remove('wrong');
          key.classList.remove('chosen');
@@ -28,7 +30,7 @@ class Game {
          heart.firstElementChild.setAttribute('src', 'images/liveHeart.png');
       }
       // hide the start screen overlay
-      document.getElementById('overlay').style.display = 'none';
+      startScrn.style.display = 'none';
       // sets activePhrase to one of the 5 phrases
       const phrase = this.getRandomPhrase();
       this.activePhrase = new Phrase(phrase);
@@ -45,8 +47,9 @@ class Game {
     * letter in the activePhrase
     */
    handleInteraction(keys, letter) {   
-      const phrase = this.activePhrase.phrase; 
-      if (!phrase.includes(letter)) {
+      const phraseObj = this.activePhrase; 
+      const phraseTxt = phraseObj.phrase;
+      if (!phraseTxt.includes(letter)) {
          for (let key of keys) {
             if (key.textContent === letter) {
                key.classList.add('wrong');
@@ -57,12 +60,12 @@ class Game {
          for (let key of keys) {
             if (key.textContent === letter) {
                key.classList.add('chosen');
+               phraseObj.showMatchedLetter(letter);
+               const hasWon = this.checkForWin();
+               if (hasWon) {
+                  this.gameOver(true);
+               }
             }
-         }
-         this.showMatchedLetter();
-         const hasWon = this.checkForWin();
-         if (hasWon) {
-            this.gameOver();
          }
       }
    }
@@ -76,7 +79,7 @@ class Game {
       hearts[0].setAttribute('src', "images/lostHeart.png");
       this.missed++;
       if (this.missed === 5) {
-         this.gameOver();
+         this.gameOver(false);
       }
    }
 
@@ -85,14 +88,31 @@ class Game {
     * in the active phrase.
     */
    checkForWin() {
-
+      const letters = phraseList.childNodes;
+      // iterate over li's
+      for (let letter of letters) {
+        if (letter.classList.contains('hide')) {
+         // still hidden means game is not over  
+          return false;
+        }
+      }
+      return true;
    }
 
    /**
     * Displays the original start screen overlay, along with the 
     * outcome of the last game.
     */
-   gameOver() {
-
+   gameOver(hasWinner) {
+      // display the start screen overlay
+      startScrn.style.display = 'block';
+      startScrn.classList.remove('start');
+      if (hasWinner) {
+         startScrn.querySelector('h1').textContent = "You Win!";
+         startScrn.classList.add('win');
+      } else {
+         startScrn.querySelector('h1').textContent = "You lost :(";
+         startScrn.classList.add('lose');
+      }
    }
 }

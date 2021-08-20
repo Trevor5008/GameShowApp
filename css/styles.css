@@ -60,6 +60,11 @@ button {
   cursor: pointer;
 }
 
+#theme_btns {
+   margin: 14px;
+   padding: 1.25rem .75rem;
+}
+
 #btn__reset {
 	width: 200px;
 	margin: 0 auto;
@@ -74,6 +79,23 @@ button {
   text-align: center;
 }
 
+/* Themes */
+.hacker {
+   background: url('../images/hacker_bkgd.jpg') center/cover no-repeat;
+}
+
+.tropics {
+   background: url('../images/tropics.jpg') center/cover no-repeat;
+}
+
+.future {
+   background: url('../images/future.gif') center/cover no-repeat;
+}
+
+.nature {
+   background: url('../images/nature.gif') center/cover no-repeat;
+}
+
 .section {
   width: 100%;
   padding: 10px;
@@ -86,7 +108,7 @@ button {
 /* Title */
 
 .header {
-  color: #3a3f58;
+  color: #262835;
 }
 
 
@@ -106,8 +128,6 @@ button {
 .space {
   width: 15px;
 }
-
-
 
 .show {
   color: #fff;
@@ -180,7 +200,7 @@ button {
 }
 
 .start {
-  background-color: #3a3f58;
+  background: url('../images/start_screen.gif') center/cover no-repeat;
 }
 
 .start a {

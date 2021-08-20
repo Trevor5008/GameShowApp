@@ -14,6 +14,7 @@ class Game {
 
    startGame() {
       winner = false;
+      theme.style.display = 'block';
       startScrn.classList.remove('win', 'lose');
       // clear out any li child nodes on phrase ul node
       while (phraseList.firstChild) {
@@ -107,11 +108,13 @@ class Game {
     * outcome of the last game.
     */
    gameOver() {
+      theme.style.display = 'none';
       // display the start screen overlay
       startScrn.style.display = 'block';
       startScrn.classList.remove('start');
       // conditionally set text and class
       heading.textContent = winner ? "You Win!" : "You Lost :(";
       startScrn.classList.add(`${winner ? 'win' : 'lose'}`);
+      startBtn.textContent = 'Play again';
    }
 }

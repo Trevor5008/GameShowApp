@@ -7,3 +7,5 @@ the hidden phrase.
 
 ## Enhancement(s)
 Allows user to (also) use keyboard for letter selection
+### Theme selection
+Allows user to choose a background theme

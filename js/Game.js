@@ -14,6 +14,7 @@ class Game {
 
    startGame() {
       winner = false;
+      startScrn.classList.remove('win', 'lose');
       // clear out any li child nodes on phrase ul node
       while (phraseList.firstChild) {
          phraseList.removeChild(phraseList.firstChild);

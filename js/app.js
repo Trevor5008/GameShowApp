@@ -27,6 +27,10 @@ document.addEventListener('keyup', (evt) => {
    const isLetter = /\w/.test(evt.key);
    if (isLetter) {
       game.handleInteraction(keyBtns, evt.key);
-      key.setAttribute('disabled', true);
+      for (let key of keyBtns) {
+         if (key.textContent === evt.key) {
+            key.setAttribute('disabled', true);
+         }
+      }
    }
 });

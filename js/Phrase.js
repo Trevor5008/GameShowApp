@@ -9,6 +9,20 @@ class Phrase {
     * by an empty (li) box).
     */
    addPhraseToDisplay() {
+      const phraseDiv = document.getElementById('phrase').querySelector('ul');
+      const phraseArr = this.phrase.split('');
+      phraseArr.forEach(letter => {
+         const li = document.createElement('li');
+         const isLetter = /\w/.test(letter);
+         if (isLetter) {
+            li.classList.add('hide', 'letter', `'${letter}'`);
+            li.textContent = letter;
+         } else if (letter === ' ') {
+            li.classList.add('space');
+            li.textContent = ' ';
+         }
+         phraseDiv.append(li);
+      });
 
    }
 

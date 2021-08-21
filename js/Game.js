@@ -1,8 +1,8 @@
 class Game {
    constructor() {
       this.missed = 0;
-      // array of five phrases to choose from
-      this.phrases = phraseBank;
+      // transforms array of strings into array of phrase objects
+      this.phrases = phraseBank.map(phrase => new Phrase(phrase));
       this.activePhrase = null;
    }
 
@@ -25,7 +25,9 @@ class Game {
       } else if (theme === 'hacker') {
          fontFam = `'Permanent Marker', cursive`;
          textColor = '#ff26ee';
-      }
+      } 
+      // sets the background theme
+      body.classList.add(themeChoice);
 
       titleHeader.style.fontFamily = fontFam;
       titleHeader.style.color = textColor;
@@ -43,6 +45,8 @@ class Game {
       while (phraseList.firstChild) {
          phraseList.removeChild(phraseList.firstChild);
       }
+      // short-circuit eval to set randomized default theme (if not selected)
+      themeChoice = themeChoice || this.randomizer(themes, themes.length);
       // use helper method to apply custom styles
       this.themeStyler(themeChoice);
 
@@ -63,17 +67,27 @@ class Game {
       startScrn.style.display = 'none';
       // sets activePhrase to one of the 5 phrases
       const phrase = this.getRandomPhrase();
-      this.activePhrase = new Phrase(phrase);
+      this.activePhrase = phrase;
       this.activePhrase.addPhraseToDisplay();
       // activate chosen theme
       for (let letter of letters) {
          letter.style.fontFamily = fontFam;
       }
    }
+   /**
+    * Helper method used in getRandomPhrase() and w/in startGame()
+    * @param {Array} collection - source of data to randomize 
+    * @param {*} length - length of collection being evaluated
+    * @returns - randomized value from source collection
+    */
+   randomizer(collection, length) {
+      const idx = Math.floor(Math.random() * length);
+      return collection[idx];
+   }
 
    getRandomPhrase() {
-      const idx = Math.floor(Math.random() * this.phrases.length);
-      return this.phrases[idx];
+      const length = this.phrases.length;
+      return this.randomizer(this.phrases, length);
    }
 
    /**

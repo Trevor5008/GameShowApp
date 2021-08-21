@@ -1,8 +1,9 @@
 const body = document.querySelector('body');
 const theme = document.getElementById('theme');
+const themes = ['hacker', 'nature', 'tropics', 'future'];
 const themeSlct = document.getElementById('theme_btns');
 const themeBtns = themeSlct.children;
-let themChoice = '';
+let themeChoice = '';
 const startBtn = document.getElementById('btn__reset');
 const phraseList = document.getElementById('phrase').firstElementChild;
 const letters = phraseList.childNodes;
@@ -18,14 +19,15 @@ let winner = false;
 let game = null;
 
 themeSlct.addEventListener('click', (e) => {
-   themeChoice = e.target.id;
-   themeSlct.querySelector(`#${themeChoice}`).classList.add('chosen');
-   // sets the background theme
-   body.classList.add(themeChoice)
-   for (let btn of themeBtns) {
-      if (btn.id !== themeChoice) {
-         btn.classList.remove('chosen');
-         body.classList.remove(btn.id);
+   if (e.target.tagName === 'BUTTON') {
+      themeChoice = e.target.id;
+      themeSlct.querySelector(`#${themeChoice}`).classList.add('chosen');
+
+      for (let btn of themeBtns) {
+         if (btn.id !== themeChoice) {
+            btn.classList.remove('chosen');
+            body.classList.remove(btn.id);
+         }
       }
    }
 });

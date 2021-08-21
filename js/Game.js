@@ -1,15 +1,38 @@
-const startScrn = document.getElementById('overlay');
-const heading = startScrn.querySelector('h1');
-const phraseBank = ["I'll be back", "Luke, I am your father", "Release the Kraken!", "Bond, James Bond", "Say hello to my little friend!"];
-// initial state = no winner
-let winner = false;
-
 class Game {
    constructor() {
       this.missed = 0;
       // array of five phrases to choose from
       this.phrases = phraseBank;
       this.activePhrase = null;
+   }
+
+   /**
+    * Helper function used for customizable theme
+    * @param {string} theme - global theme setting
+    * chosen at start menu
+    */
+   themeStyler(theme) {
+      // Set theme
+      if (theme === 'future') {
+         fontFam = `'Audiowide', cursive`;
+         textColor = '#566aee';
+      } else if (theme === 'tropics') {
+         fontFam = `'Nanum Pen Script', cursive`;
+         textColor = '#fdff93';
+      } else if (theme === 'nature') {
+         fontFam = `'Cinzel', serif`;
+       
+      } else if (theme === 'hacker') {
+         fontFam = `'Permanent Marker', cursive`;
+         textColor = '#ff26ee';
+      }
+
+      titleHeader.style.fontFamily = fontFam;
+      titleHeader.style.color = textColor;
+      // style keys with chosen theme
+      for (let key of keyBtns) {
+         key.style.fontFamily = fontFam;
+      }
    }
 
    startGame() {
@@ -20,6 +43,8 @@ class Game {
       while (phraseList.firstChild) {
          phraseList.removeChild(phraseList.firstChild);
       }
+      // use helper method to apply custom styles
+      this.themeStyler(themeChoice);
 
       // Enable all the onscreen kb buttons, and update to use 'key'
       // class (not 'chosen' or 'wrong' classes)
@@ -40,6 +65,10 @@ class Game {
       const phrase = this.getRandomPhrase();
       this.activePhrase = new Phrase(phrase);
       this.activePhrase.addPhraseToDisplay();
+      // activate chosen theme
+      for (let letter of letters) {
+         letter.style.fontFamily = fontFam;
+      }
    }
 
    getRandomPhrase() {

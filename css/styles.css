@@ -1,5 +1,7 @@
 /* Main styles */
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&Roboto:300');
+/* Theme styles */
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Cinzel&family=Nanum+Pen+Script&family=Permanent+Marker&display=swap');
 
 /* Variables */
 
@@ -81,11 +83,11 @@ button {
 
 /* Themes */
 .hacker {
-   background: url('../images/hacker_bkgd.jpg') center/cover no-repeat;
+   background: url('../images/hacker.gif') center/cover no-repeat;
 }
 
 .tropics {
-   background: url('../images/tropics.jpg') center/cover no-repeat;
+   background: url('../images/tropics.gif') center/cover no-repeat;
 }
 
 .future {

@@ -2,19 +2,28 @@ const body = document.querySelector('body');
 const theme = document.getElementById('theme');
 const themeSlct = document.getElementById('theme_btns');
 const themeBtns = themeSlct.children;
+let themChoice = '';
 const startBtn = document.getElementById('btn__reset');
 const phraseList = document.getElementById('phrase').firstElementChild;
 const letters = phraseList.childNodes;
 const keyBtns = document.getElementsByClassName('key');
+const startScrn = document.getElementById('overlay');
+const heading = startScrn.querySelector('h1');
+const titleHeader = document.querySelector('.header');
+const phraseBank = ["I'll be back", "Luke, I am your father", "Release the Kraken!", "Bond, James Bond", "Say hello to my little friend!"];
+let fontFam = '';
+let textColor = '';
+// initial state = no winner
+let winner = false;
 let game = null;
 
 themeSlct.addEventListener('click', (e) => {
-   const choice = e.target.id;
-   themeSlct.querySelector(`#${choice}`).classList.add('chosen');
+   themeChoice = e.target.id;
+   themeSlct.querySelector(`#${themeChoice}`).classList.add('chosen');
    // sets the background theme
-   body.classList.add(choice)
+   body.classList.add(themeChoice)
    for (let btn of themeBtns) {
-      if (btn.id !== choice) {
+      if (btn.id !== themeChoice) {
          btn.classList.remove('chosen');
          body.classList.remove(btn.id);
       }

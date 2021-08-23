@@ -13,15 +13,12 @@ class Phrase {
       phraseArr.forEach(letter => {
          const li = document.createElement('li');
          const isLetter = /\w/.test(letter);
-         const isChar = /\S/.test(letter);
          if (isLetter) {
             li.classList.add('hide', 'letter', `'${letter}'`);
-         } else if (isChar) {
-            li.classList.add('show');
          } else {   
             li.classList.add('space');
          }
-         li.textContent = isLetter || isChar ? letter
+         li.textContent = isLetter ? letter
             : ' ';
          phraseList.append(li);
       });

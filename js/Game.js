@@ -38,26 +38,16 @@ class Game {
    }
 
    startGame() {
+      for (let key of keyBtns) {
+         key.classList.add('key');
+      }
       winner = false;
       theme.style.display = 'block';
       startScrn.classList.remove('win', 'lose');
-      // clear out any li child nodes on phrase ul node
-      while (phraseList.firstChild) {
-         phraseList.removeChild(phraseList.firstChild);
-      }
       // short-circuit eval to set randomized default theme (if not selected)
       themeChoice = themeChoice || this.randomizer(themes, themes.length);
       // use helper method to apply custom styles
       this.themeStyler(themeChoice);
-
-      // Enable all the onscreen kb buttons, and update to use 'key'
-      // class (not 'chosen' or 'wrong' classes)
-      for (let key of keyBtns) {
-         key.classList.remove('wrong');
-         key.classList.remove('chosen');
-         key.removeAttribute('disabled');
-         key.classList.add('key');
-      }
 
       const hearts = document.getElementsByClassName('tries');
       for (let heart of hearts) {
@@ -77,7 +67,7 @@ class Game {
    /**
     * Helper method used in getRandomPhrase() and w/in startGame()
     * @param {Array} collection - source of data to randomize 
-    * @param {*} length - length of collection being evaluated
+    * @param {Number} length - length of collection being evaluated
     * @returns - randomized value from source collection
     */
    randomizer(collection, length) {
@@ -91,8 +81,7 @@ class Game {
    }
 
    /**
-    * Checks to see if the button clicked by the player matches a 
-    * letter in the activePhrase
+    * Checks to see if the button clicked by the player matches a letter in the activePhrase
     */
    handleInteraction(keys, letter) {   
       const phraseObj = this.activePhrase; 
@@ -101,6 +90,7 @@ class Game {
          for (let key of keys) {
             if (key.textContent === letter) {
                key.classList.add('wrong');
+               key.setAttribute('disabled', true);
             }
          }
          this.removeLife();
@@ -108,6 +98,7 @@ class Game {
          for (let key of keys) {
             if (key.textContent === letter) {
                key.classList.add('chosen');
+               key.setAttribute('disabled', true);
                phraseObj.showMatchedLetter(letter);
                winner = this.checkForWin();
                if (winner) {
@@ -147,10 +138,31 @@ class Game {
    }
 
    /**
+    * Helper used inside of gameOver()
+    */
+   resetBoard() {
+       // clear out any li child nodes on phrase ul node
+       while (phraseList.firstChild) {
+         phraseList.removeChild(phraseList.firstChild);
+       }
+ 
+       // Enable all the onscreen kb buttons, and update to use 'key'
+       // class (not 'chosen' or 'wrong' classes)
+       for (let key of keyBtns) {
+          key.classList.remove('wrong');
+          key.classList.remove('chosen');
+          key.removeAttribute('disabled');
+          key.classList.add('key');
+       }
+       // reset keys chosen
+       keysChosen = [];
+   }
+   /**
     * Displays the original start screen overlay, along with the 
     * outcome of the last game.
     */
    gameOver() {
+      this.resetBoard();
       theme.style.display = 'none';
       // display the start screen overlay
       startScrn.style.display = 'block';

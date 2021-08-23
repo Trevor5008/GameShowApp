@@ -12,6 +12,8 @@ const startScrn = document.getElementById('overlay');
 const heading = startScrn.querySelector('h1');
 const titleHeader = document.querySelector('.header');
 const phraseBank = ["I'll be back", "Luke, I am your father", "Release the Kraken!", "Bond, James Bond", "Say hello to my little friend!"];
+// tracks keys already selected
+let keysChosen = [];
 let fontFam = '';
 let textColor = '';
 // initial state = no winner
@@ -41,10 +43,15 @@ startBtn.addEventListener('click', () => {
 /**
  * Adds listeners on each key button
  */
-for (let key of keyBtns) {
+ for (let key of keyBtns) {
    key.addEventListener('click', (e) => {
-      game.handleInteraction(keyBtns, e.target.textContent);
-      key.setAttribute('disabled', true);
+      let key = e.target.textContent;
+      // checks if key is previously selected
+      if (!keysChosen.includes(key)) {
+         // add to collection
+         keysChosen.push(key);
+         game.handleInteraction(keyBtns, e.target.textContent);
+      }
    });
 }
 
@@ -53,12 +60,8 @@ for (let key of keyBtns) {
  */
 document.addEventListener('keyup', (evt) => {
    const isLetter = /\w/.test(evt.key);
-   if (isLetter) {
+   if (isLetter && !keysChosen.includes(evt.key)) {
+      keysChosen.push(evt.key);
       game.handleInteraction(keyBtns, evt.key);
-      for (let key of keyBtns) {
-         if (key.textContent === evt.key) {
-            key.setAttribute('disabled', true);
-         }
-      }
    }
 });

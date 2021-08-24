@@ -171,5 +171,6 @@ class Game {
       heading.textContent = winner ? "You Win!" : "You Lost :(";
       startScrn.classList.add(`${winner ? 'win' : 'lose'}`);
       startBtn.textContent = 'Play again';
+      game = null;
    }
 }

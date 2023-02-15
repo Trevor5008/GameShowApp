@@ -19,7 +19,6 @@
 }
 
 /* main */
-
 * {
   box-sizing: border-box;
   font-family: 'Montserrat', sans-serif;
@@ -103,10 +102,6 @@ button {
   padding: 10px;
 }
 
-#phrase ul li{
-  margin-top: 15px;
-}
-
 /* Title */
 
 .header {
@@ -120,7 +115,6 @@ button {
   font-size: var(--font-size-medium);
   height: 65px;
   width: 65px;
-  padding: 20px 1px 0 1px;
   margin-right: 2px;
   color: transparent;
   background: var(--color-neutral-light);
@@ -134,16 +128,24 @@ button {
 .show {
   color: #fff;
   background-color: #4ac0d5;
-  font-size: 20px;
+  font-size: 40px;
   height: 65px;
   width: 65px;
-  padding: 20px 1px 0 1px;
   margin-right: 2px;
   border-radius: 5px;
   -webkit-animation-duration: .5s;
   animation-duration: .5s;
 }
 
+.show {
+   position: relative;
+   top: 10px;
+}
+
+.hide {
+   position: relative;
+   bottom: 10px;
+}
 
 /* Keyboard */
 
